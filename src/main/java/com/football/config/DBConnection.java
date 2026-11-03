@@ -12,6 +12,15 @@ public final class DBConnection {
     private static final String USERNAME = getSetting("football.db.username", "FOOTBALL_DB_USERNAME", "root");
     private static final String PASSWORD = getSetting("football.db.password", "FOOTBALL_DB_PASSWORD", "");
 
+    static {
+        try {
+            // Explicit registration keeps the application reliable in Tomcat's webapp classloader.
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException exception) {
+            throw new ExceptionInInitializerError("MySQL JDBC driver is missing from WEB-INF/lib");
+        }
+    }
+
     private DBConnection() {
     }
 
