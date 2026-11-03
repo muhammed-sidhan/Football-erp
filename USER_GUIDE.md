@@ -108,6 +108,8 @@ Username: root
 Password: empty by default
 ```
 
+If the sample login does not work because the database already contained older user records, run [reset-sample-users.sql](reset-sample-users.sql) once in MySQL Workbench. It resets both sample accounts to the credentials documented above without changing tournament data.
+
 For a different MySQL configuration, set these environment variables before starting Tomcat:
 
 ```text

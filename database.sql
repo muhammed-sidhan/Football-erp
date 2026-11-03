@@ -131,10 +131,14 @@ VALUES
     (2, 1, 'Tech Strikers', NULL, 'A student football team from the technology department.', 'Anita Verma', 'APPROVED');
 
 -- BCrypt hash for the sample password: password
-INSERT IGNORE INTO users (user_id, username, password, role, team_id)
+INSERT INTO users (user_id, username, password, role, team_id)
 VALUES
     (1, 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ADMIN', NULL),
-    (2, 'coadmin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'CO_ADMIN', 1);
+    (2, 'coadmin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'CO_ADMIN', 1)
+ON DUPLICATE KEY UPDATE
+    password = VALUES(password),
+    role = VALUES(role),
+    team_id = VALUES(team_id);
 
 INSERT IGNORE INTO players
     (player_id, team_id, player_name, age, jersey_number, position, registration_status)
