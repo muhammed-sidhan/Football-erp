@@ -1,0 +1,5 @@
+0:0:0:0:0:0:0:1 - - [03/Nov/2026:23:52:40 +0530] "GET /football-tournament-system/ HTTP/1.1" 404 783
+0:0:0:0:0:0:0:1 - - [03/Nov/2026:23:53:02 +0530] "GET /football-tournament-system/ HTTP/1.1" 404 783
+0:0:0:0:0:0:0:1 - - [03/Nov/2026:23:54:20 +0530] "GET /football-tournament-system/ HTTP/1.1" 200 831
+0:0:0:0:0:0:0:1 - - [03/Nov/2026:23:55:40 +0530] "GET /football-tournament-system/ HTTP/1.1" 200 831
+0:0:0:0:0:0:0:1 - - [03/Nov/2026:23:55:41 +0530] "GET /favicon.ico HTTP/1.1" 200 21630
