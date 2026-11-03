@@ -133,8 +133,8 @@ VALUES
 -- BCrypt hash for the sample password: password
 INSERT INTO users (user_id, username, password, role, team_id)
 VALUES
-    (1, 'admin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'ADMIN', NULL),
-    (2, 'coadmin', '$2a$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'CO_ADMIN', 1)
+    (1, 'admin', '$2a$10$L1R6CwvwdTLqxwjHRfGod.M5dxuEI11wFXVM7GfNedUaEqdASdP2y', 'ADMIN', NULL),
+    (2, 'coadmin', '$2a$10$L1R6CwvwdTLqxwjHRfGod.M5dxuEI11wFXVM7GfNedUaEqdASdP2y', 'CO_ADMIN', 1)
 ON DUPLICATE KEY UPDATE
     password = VALUES(password),
     role = VALUES(role),

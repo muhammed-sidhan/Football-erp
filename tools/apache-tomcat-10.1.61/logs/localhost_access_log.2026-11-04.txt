@@ -88,3 +88,5 @@
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:01:18:54 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:01:22:03 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1066
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:01:22:30 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:01:24:32 +0530] "POST /football-tournament-system/login HTTP/1.1" 302 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:01:24:41 +0530] "POST /football-tournament-system/login HTTP/1.1" 302 -
