@@ -229,3 +229,9 @@
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:52:34 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:52:49 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:53:11 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:10:30:18 +0530] "GET /football-tournament-system/public/matches HTTP/1.1" 200 2412
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:10:30:47 +0530] "GET /football-tournament-system/register-team HTTP/1.1" 200 1284
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:10:30:47 +0530] "GET /css/style.css HTTP/1.1" 404 769
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:10:31:02 +0530] "GET /football-tournament-system/register-team HTTP/1.1" 200 1284
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:10:31:02 +0530] "GET /css/style.css HTTP/1.1" 404 769
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:10:37:19 +0530] "GET /football-tournament-system/login HTTP/1.1" 200 988
