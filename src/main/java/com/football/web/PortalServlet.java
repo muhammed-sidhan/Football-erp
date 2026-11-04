@@ -124,6 +124,9 @@ public class PortalServlet extends HttpServlet {
                     "SELECT team_id,team_name,coach_name,description FROM teams WHERE registration_status='APPROVED' ORDER BY team_name",
                     new String[]{"ID", "Team", "Coach", "About"},
                     new String[]{"team_id", "team_name", "coach_name", "description"});
+        } else if (page.equals("standings")) {
+            heading(response.getWriter(), "Points Tables", "Each tournament has its own table. Completed matches only: win 3, draw 1.");
+            renderStandings(response.getWriter(), connection);
         } else {
             String filter = page.equals("live") ? " WHERE m.status='LIVE'" :
                     page.equals("results") ? " WHERE m.status='COMPLETED'" : "";
@@ -137,10 +140,6 @@ public class PortalServlet extends HttpServlet {
                             filter + " ORDER BY m.match_date,m.match_time",
                     new String[]{"ID", "Tournament", "Home", "Away", "Date", "Time", "Venue", "Score", "Status"},
                     new String[]{"match_id", "tournament_name", "home_team", "away_team", "match_date", "match_time", "venue", "score", "status"});
-            if (page.equals("standings")) {
-                response.getWriter().println("<h2>Points tables</h2>");
-                renderStandings(response.getWriter(), connection);
-            }
         }
         end(response.getWriter());
     }
@@ -372,15 +371,39 @@ public class PortalServlet extends HttpServlet {
     }
 
     private void renderStandings(PrintWriter out, Connection connection) throws SQLException {
-        out.println("<table><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Points</th></tr>");
-        String sql = "SELECT t.team_name, COUNT(m.match_id) played, SUM(CASE WHEN (m.home_team_id=t.team_id AND m.home_score>m.away_score) OR (m.away_team_id=t.team_id AND m.away_score>m.home_score) THEN 1 ELSE 0 END) won, SUM(CASE WHEN m.home_score=m.away_score THEN 1 ELSE 0 END) drawn, SUM(CASE WHEN (m.home_team_id=t.team_id AND m.home_score<m.away_score) OR (m.away_team_id=t.team_id AND m.away_score<m.home_score) THEN 1 ELSE 0 END) lost, SUM(CASE WHEN m.home_team_id=t.team_id THEN m.home_score ELSE m.away_score END) gf, SUM(CASE WHEN m.home_team_id=t.team_id THEN m.away_score ELSE m.home_score END) ga FROM teams t LEFT JOIN matches m ON m.status='COMPLETED' AND (m.home_team_id=t.team_id OR m.away_team_id=t.team_id) WHERE t.registration_status='APPROVED' GROUP BY t.team_id,t.team_name ORDER BY (won*3+drawn) DESC,(gf-ga) DESC,gf DESC";
-        try (PreparedStatement statement = connection.prepareStatement(sql); ResultSet result = statement.executeQuery()) {
-            while (result.next()) {
-                int won = result.getInt("won"), drawn = result.getInt("drawn"), gf = result.getInt("gf"), ga = result.getInt("ga");
-                out.println("<tr><td>" + Html.escape(result.getString("team_name")) + "</td><td>" + result.getInt("played") + "</td><td>" + won + "</td><td>" + drawn + "</td><td>" + result.getInt("lost") + "</td><td>" + gf + "</td><td>" + ga + "</td><td>" + (gf - ga) + "</td><td>" + (won * 3 + drawn) + "</td></tr>");
+        String tournamentsSql = "SELECT tournament_id,tournament_name,status FROM tournaments ORDER BY start_date,tournament_id";
+        String standingsSql = "SELECT t.team_name, COUNT(m.match_id) played, "
+                + "COALESCE(SUM(CASE WHEN (m.home_team_id=t.team_id AND m.home_score>m.away_score) "
+                + "OR (m.away_team_id=t.team_id AND m.away_score>m.home_score) THEN 1 ELSE 0 END),0) won, "
+                + "COALESCE(SUM(CASE WHEN m.home_score=m.away_score THEN 1 ELSE 0 END),0) drawn, "
+                + "COALESCE(SUM(CASE WHEN (m.home_team_id=t.team_id AND m.home_score<m.away_score) "
+                + "OR (m.away_team_id=t.team_id AND m.away_score<m.home_score) THEN 1 ELSE 0 END),0) lost, "
+                + "COALESCE(SUM(CASE WHEN m.home_team_id=t.team_id THEN m.home_score ELSE m.away_score END),0) gf, "
+                + "COALESCE(SUM(CASE WHEN m.home_team_id=t.team_id THEN m.away_score ELSE m.home_score END),0) ga "
+                + "FROM teams t LEFT JOIN matches m ON m.tournament_id=? AND m.status='COMPLETED' "
+                + "AND (m.home_team_id=t.team_id OR m.away_team_id=t.team_id) "
+                + "WHERE t.tournament_id=? AND t.registration_status='APPROVED' "
+                + "GROUP BY t.team_id,t.team_name ORDER BY (won*3+drawn) DESC,(gf-ga) DESC,gf DESC,t.team_name";
+
+        try (PreparedStatement tournamentStatement = connection.prepareStatement(tournamentsSql);
+             ResultSet tournaments = tournamentStatement.executeQuery()) {
+            while (tournaments.next()) {
+                int tournamentId = tournaments.getInt("tournament_id");
+                out.println("<h2>" + Html.escape(tournaments.getString("tournament_name")) + " <span class='muted'>(" + Html.escape(tournaments.getString("status")) + ")</span></h2>");
+                out.println("<table><tr><th>Team</th><th>P</th><th>W</th><th>D</th><th>L</th><th>GF</th><th>GA</th><th>GD</th><th>Points</th></tr>");
+                try (PreparedStatement statement = connection.prepareStatement(standingsSql)) {
+                    statement.setInt(1, tournamentId);
+                    statement.setInt(2, tournamentId);
+                    try (ResultSet result = statement.executeQuery()) {
+                        while (result.next()) {
+                            int won = result.getInt("won"), drawn = result.getInt("drawn"), gf = result.getInt("gf"), ga = result.getInt("ga");
+                            out.println("<tr><td>" + Html.escape(result.getString("team_name")) + "</td><td>" + result.getInt("played") + "</td><td>" + won + "</td><td>" + drawn + "</td><td>" + result.getInt("lost") + "</td><td>" + gf + "</td><td>" + ga + "</td><td>" + (gf - ga) + "</td><td>" + (won * 3 + drawn) + "</td></tr>");
+                        }
+                    }
+                }
+                out.println("</table>");
             }
         }
-        out.println("</table>");
     }
 
     private void table(PrintWriter out, Connection connection, String sql, String[] headers, String[] columns) throws SQLException {
