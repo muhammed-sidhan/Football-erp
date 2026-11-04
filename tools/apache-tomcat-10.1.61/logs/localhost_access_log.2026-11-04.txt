@@ -215,3 +215,17 @@
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:02:13:59 +0530] "GET /football-tournament-system/images/standings.svg HTTP/1.1" 304 -
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:02:13:59 +0530] "GET /football-tournament-system/images/match-centre.svg HTTP/1.1" 304 -
 0:0:0:0:0:0:0:1 - - [04/Nov/2026:02:14:14 +0530] "GET /football-tournament-system/login HTTP/1.1" 200 988
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:35 +0530] "GET /football-tournament-system/ HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:35 +0530] "GET /football-tournament-system/images/teams.svg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:35 +0530] "GET /football-tournament-system/images/match-centre.svg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:36 +0530] "GET /football-tournament-system/images/standings.svg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:36 +0530] "GET /football-tournament-system/css/style.css HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:36 +0530] "GET /football-tournament-system/images/football.svg HTTP/1.1" 304 -
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:41 +0530] "GET /football-tournament-system/public/tournaments HTTP/1.1" 200 1625
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:51 +0530] "GET /football-tournament-system/public/teams HTTP/1.1" 200 1570
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:51:54 +0530] "GET /football-tournament-system/public/matches HTTP/1.1" 200 2412
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:52:05 +0530] "GET /football-tournament-system/public/standings HTTP/1.1" 200 3140
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:52:25 +0530] "GET /football-tournament-system/login HTTP/1.1" 200 988
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:52:34 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:52:49 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
+0:0:0:0:0:0:0:1 - - [04/Nov/2026:09:53:11 +0530] "POST /football-tournament-system/login HTTP/1.1" 200 1040
